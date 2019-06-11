@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title> Drawing Program </title>
+
+<script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.js"></script>
+
+<script src= "http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.6/addons/p5.dom.js"></script>
+
+</head>
+<body>
+<script>
+ 	
+ 	var penEquip = false
+    var paintBrushEquip = false
+    var shaderEquip = false
+    var eraserEquip = false
+    var colorChooserTemplate = false
+    var opacityDown = false
+    var opacityUp = false
+
+    var colorEqualsRed = false
+    var colorEqualsGreen = false
+    var colorEqualsBlue = false
+    var colorEqualsBlack = true
+    var colorEqualsBrown = false
+    var colorEqualsYellow = false
+    var colorEqualsExtra = false
+
+    var finalDiameterOfLine = 0
+    var finalRColorOfLine = 255
+    var finalGColorOfLine = 255
+    var finalBColorOfLine = 255
+    var finalOpacityOfLine = 100
+    var fr = 100000
+    class completeDrawing {
+		
+		constructor(diameter /*this is the same as the height*/,rColorOfLine,gColorOfLine,bColorOfLine,opacityOfLine){
+			this.diameter = diameter
+			this.rColorOfLine = rColorOfLine
+			this.gColorOfLine = gColorOfLine
+			this.bColorOfLine = bColorOfLine
+			this.opacityOfLine = opacityOfLine
+		}
+
+		showLine(){
+			fill(this.rColorOfLine,this.gColorOfLine,this.bColorOfLine,this.opacityOfLine)
+			noStroke()
+			ellipse(mouseX,mouseY,this.diameter,this.diameter)
+		}
+	} //completeDrawing
+
+	function setup(){
+
+       
+        noLoop()
+
+        var screenSizeX = windowWidth;
+		var screenSizeY = windowHeight;
+		createCanvas(screenSizeX,screenSizeY);
+	  	background(255);
+
+	  	drawControls()
+	  	frameRate(fr)
+    }
+
+
+    
+    function drawControls(){
+
+		
+    	
+	  	//clear button
+	  	fill (200)
+    	rect(20, 20, 100, 30, 10);
+	  	textSize(15);
+	  	fill(0)
+		text('clear canvas', 30, 40);
+    
+
+		//pen button
+		if (penEquip){
+			fill('rgb(0,255,0)');
+		}else{
+			fill(200)
+		}
+    	rect(20, 70, 100, 30, 10);
+	  	textSize(20);
+	  	fill(0)
+		text( "Pen", 55, 92);
+
+		//paint button
+		if (paintBrushEquip){
+			fill('rgb(0,255,0)');
+
+		}else{
+
+			fill(200)
+		}
+    	rect(20, 120, 100, 30, 10);
+	  	textSize(20);
+	  	fill(0)
+		text( "Brush", 45, 142);
+
+		// shader button
+		if (shaderEquip){
+			fill('rgb(0,255,0)');
+
+		}else{
+
+			fill(200)
+		}
+    	rect(20, 170, 100, 30, 10);
+	  	textSize(20);
+	  	fill(0)
+		text( "Shader", 38, 192);
+
+		//eraser button
+		if (eraserEquip){
+			fill('rgb(0,255,0)');
+
+		}else{
+
+			fill(200)
+		}
+    	rect(20, 220, 100, 30, 10);
+	  	textSize(20);
+	  	fill(0)
+		text( "Eraser", 41, 242);
+
+		//opacity plus button ====================
+		
+		fill(200,200,200,finalOpacityOfLine)
+	
+    	rect(20, 270, 40, 30, 10);
+	  	textSize(20);
+	  	fill(0)
+		text( "+", 35, 292);
+
+		//opacity minus button =====================
+
+		fill(200,200,200,finalOpacityOfLine)
+    	
+    	rect(80, 270, 40, 30, 10);
+	  	textSize(20);
+	  	fill(0)
+		text( "-", 97, 292);
+
+
+
+    }
+
+// clear 20-50
+// left  70-100
+// right 120-150
+// top 170-200
+// down 220-250
+//dPlus 270-300
+
+
+	function mousePressed() {
+
+			
+		//if mouseX is within CLEAR button 
+		// and mouseY is within CLEAR button 
+        
+        //clear button is pressed
+        	if (mouseX > 20 && mouseX < 120 && mouseY > 20 && mouseY < 50){
+
+			    penEquip = false
+			    paintBrushEquip = false
+			    shaderEquip = false
+			    eraserEquip = false
+			    opacityUp = false
+			    opacityDown = false
+
+        		clear()
+        		drawControls()
+
+               }
+
+          //pen button is pressed
+            if (mouseX > 20 && mouseX < 120 && mouseY > 70 && mouseY < 100){
+
+            			penEquip = !penEquip
+            			finalDiameterOfLine = 10
+            			finalRColorOfLine = 0
+            			finalGColorOfLine = 0
+            			finalBColorOfLine = 0
+            			finalOpacityOfLine = 255
+
+					    paintBrushEquip = false
+					    shaderEquip = false
+					    eraserEquip = false
+					    opacityUp = false
+					    opacityDown = false
+
+            			drawControls()
+
+	       }
+
+	        //paint brush button is pressed
+            if (mouseX > 20 && mouseX < 120 && mouseY > 120 && mouseY < 150){
+
+            			paintBrushEquip = !paintBrushEquip
+            			finalDiameterOfLine = 50
+            			finalRColorOfLine = 0
+            			finalGColorOfLine = 0
+            			finalBColorOfLine = 0
+            			finalOpacityOfLine = 255
+            			
+            			penEquip = false
+					    shaderEquip = false
+					    eraserEquip = false
+					    opacityUp = false
+					    opacityDown = false
+
+            			drawControls()
+
+	       }
+
+	       //shader button is pressed
+            if (mouseX > 20 && mouseX < 120 && mouseY > 170 && mouseY < 200){
+
+            			shaderEquip = !shaderEquip
+            			finalDiameterOfLine = 40
+            			finalRColorOfLine = 10
+            			finalGColorOfLine = 10
+            			finalBColorOfLine = 10
+            			finalOpacityOfLine = 40
+            			
+            			penEquip = false
+					    paintBrushEquip = false
+					    eraserEquip = false
+					    opacityUp = false
+					    opacityDown = false
+
+            			drawControls()
+
+	       }
+
+	       	       //eraser button is pressed
+            if (mouseX > 20 && mouseX < 120 && mouseY > 220 && mouseY < 250){
+
+            			eraserEquip = !eraserEquip
+            			finalDiameterOfLine = 25
+            			finalRColorOfLine = 255
+            			finalGColorOfLine = 255
+            			finalBColorOfLine = 255
+            			finalOpacityOfLine = 255
+            			
+            			penEquip = false
+					    paintBrushEquip = false
+					    shaderEquip = false
+					    opacityUp = false
+					    opacityDown = false
+
+            			drawControls()
+
+	       }
+
+	        //opacity Plus button is pressed
+            if (mouseX > 20 && mouseX < 60 && mouseY > 270 && mouseY < 300){
+            			finalOpacityOfLine += 10
+            			drawControls()
+
+	       }
+
+	       //opacity Minus button is pressed
+            if (mouseX > 80 && mouseX < 120 && mouseY > 270 && mouseY < 300){
+            			finalOpacityOfLine -= 10
+            			drawControls()
+
+	       }
+
+	   loop()
+
+// clear 20-50
+// left  70-100
+// right 120-150
+// top 170-200
+// down 220-250
+//dPlus 270-300
+
+
+            
+	       //FINALLY, draw the thing
+	        // drawCircle(400, 400, diameter)
+
+	}
+
+
+	function draw(){
+
+		if (mouseX > 120){
+			var theDrawingLine = new completeDrawing (finalDiameterOfLine,finalRColorOfLine,finalGColorOfLine,finalBColorOfLine,finalOpacityOfLine)
+			theDrawingLine.showLine()
+		}
+	}
+
+	function mouseReleased() {
+	  noLoop();
+	}
+
+
+</script>
+</body>
+</html>
+
